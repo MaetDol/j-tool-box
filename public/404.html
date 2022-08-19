@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404</title>
+    <title>redirecting...</title>
 </head>
 <body>
     404 테스트에용 ㅎ
+    곧 리다이렉트 될건데, 안된다면..
+    음.. 콘솔창을 봐주세요
     <script>
-        const homepage = '%PUBLIC_URL%';
+        // URL 이 바뀌면 여기도 바꿔줘야함니당
+        const HOMEPAGE = '/j-tool-box';
+        if(location.pathname.indexOf(HOMEPAGE) !== 0) {
+            throw new Error(`Invalid root path : ${location.pathname}`);
+        }
+        
+        const path = location.pathname.replace(HOMEPAGE, '');
+        location.href = `${HOMEPAGE}/?redirect=${encodeURIComponent(path)}`;
     </script>
 </body>
 </html>
