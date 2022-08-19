@@ -6,7 +6,7 @@ export function useItems(paths: string[]) {
 }
 
 export function getItem(paths: string[], index: number) {
-  const href = paths.slice(0, index).join('/');
+  const href = paths.slice(0, index + 1).join('/');
   return (
     <Antd.Breadcrumb.Item key={href}>
       <Link to={href}>
