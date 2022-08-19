@@ -1,4 +1,5 @@
 import { Antd } from "components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { URLs } from "routing";
 import { useSeletedKeys } from "./Menu.hooks";
@@ -11,6 +12,8 @@ export default function Menu() {
         navigate(key);
     }
 
+    const [openedMenus, setOpens] = useState<string[]>([]);
+
     const selectedKeys = useSeletedKeys();
 
     return (
@@ -18,9 +21,11 @@ export default function Menu() {
             mode="inline"
             defaultSelectedKeys={[URLs.HOME]}
             items={items}
+            onSelect={routing}
             onClick={routing}
+            onOpenChange={setOpens}
             selectedKeys={selectedKeys}
-            openKeys={selectedKeys}
+            openKeys={[...selectedKeys, ...openedMenus]}
         />
     );
 }
