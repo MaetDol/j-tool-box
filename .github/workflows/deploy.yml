@@ -12,7 +12,7 @@ jobs:
       - name: Install dependencies then Deploy
         run: |
           npm install
-          npm build
+          npm run build
       
       - name: Git config
         run: |
