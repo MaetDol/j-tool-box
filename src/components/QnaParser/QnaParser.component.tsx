@@ -1,5 +1,5 @@
 import { Antd } from "components";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { parseQnaString } from "./QnaParser.hooks";
 import { QnA } from "./QnaParser.models";
 
@@ -18,6 +18,7 @@ export default function QnaParser({ value, setParsedValue, onChange }: Props) {
     
     useEffect(() => {
         setParsedValue?.(parseQnaString(content));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [content]);
 
     return (
