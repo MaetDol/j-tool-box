@@ -189,14 +189,16 @@ export default function ContentsBlock({
               suffix={'"'}
               addonAfter=":"
               placeholder="property name"
+              disabled={!data.eventName}
               style={{ flex: "1", minWidth: "240px" }}
               value={newEventPropertyName}
               onChange={handlePropertyNameInput}
             />
             <Antd.Input
-              placeholder="property value"
               prefix={'" '}
               suffix={' " }'}
+              placeholder="property value"
+              disabled={!data.eventName}
               style={{ flex: "3", borderLeft: 0 }}
               value={newEventPropertyValue}
               onChange={handlePropertyValueInput}

@@ -50,8 +50,7 @@ export default function ProgramContentsBlock() {
   };
 
   const tryCopy = () => {
-    const { failedAt, failedMessage, result } =
-      stringifyContentsBlocks(contentsBlocks);
+    const { failedMessage, result } = stringifyContentsBlocks(contentsBlocks);
 
     if (failedMessage) {
       alert(failedMessage);
@@ -59,7 +58,7 @@ export default function ProgramContentsBlock() {
     }
     copy(result)
       .then(() => alert("Copied JSON data"))
-      .catch(console.log);
+      .catch(console.error);
   };
 
   return (
