@@ -1,6 +1,6 @@
 import { Antd, PropertyItems } from "components";
 import { getInputChangeHandler } from "hooks";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import {
   toRadioOptions,
@@ -16,9 +16,10 @@ import {
 
 interface Props {
   index: number;
-  swapPosition: (aIndex: number, bIndex: number) => void;
   reorderedRef: React.MutableRefObject<boolean>;
   data: ContentsBlockData;
+  focus: boolean;
+  swapPosition: (aIndex: number, bIndex: number) => void;
   setData: (data: ContentsBlockData | undefined) => void;
 }
 
@@ -28,6 +29,7 @@ export default function ContentsBlock({
   index,
   swapPosition,
   reorderedRef,
+  focus,
   data,
   setData,
 }: Props) {
@@ -113,15 +115,29 @@ export default function ContentsBlock({
     },
   });
   drag(drop(ref));
+
   const draggingStyle: React.CSSProperties = {};
   if (isDragging) {
     draggingStyle.opacity = "0.3";
     draggingStyle.backgroundColor = "#e6f7ff";
   }
 
+  useEffect(() => {
+    if (!ref.current) return;
+    if (!focus) return;
+
+    ref.current.scrollIntoView({ behavior: "smooth" });
+  }, [focus]);
+
   return (
     <div ref={ref}>
-      <Antd.Card hoverable style={draggingStyle}>
+      <Antd.Card
+        hoverable
+        style={{
+          ...draggingStyle,
+          boxShadow: focus ? "2px 2px 16px 0 rgb(24 144 255 / 30%)" : "",
+        }}
+      >
         <Antd.Button
           type="primary"
           danger

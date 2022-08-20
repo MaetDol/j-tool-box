@@ -49,10 +49,13 @@ export default function ProgramContentsBlock() {
     setContentsBlocks(contentsBlocks.slice(0));
   };
 
+  const [focusingIndex, setFocus] = useState(-1);
   const tryCopy = () => {
-    const { failedMessage, result } = stringifyContentsBlocks(contentsBlocks);
+    const { failedMessage, failedAt, result } =
+      stringifyContentsBlocks(contentsBlocks);
 
     if (failedMessage) {
+      setFocus(failedAt);
       alert(failedMessage);
       return;
     }
@@ -100,6 +103,7 @@ export default function ProgramContentsBlock() {
             index={index}
             swapPosition={swapPosition}
             reorderedRef={reordered}
+            focus={focusingIndex === index}
           />
         ))}
       </DndProvider>
