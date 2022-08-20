@@ -85,6 +85,7 @@ export function stringifyContentsBlocks(datas: ContentsBlockData[]): {
   failedAt: number;
 } {
   const { failedAt, failedMessage } = validateContentsBlock(datas);
+
   return {
     result: failedMessage ? "" : JSON.stringify(filterField(datas), null, 4),
     failedAt,
@@ -108,9 +109,17 @@ function filterField(datas: ContentsBlockData[]): Object {
   return datas.map((data) => {
     const newObject: { [k: string]: any } = {};
     keys.forEach((key) => {
-      if (data[key]) newObject[key] = data[key];
+      if (data[key]) newObject[stringifyFieldList[key]] = data[key];
     });
-    if (!newObject.eventName) delete newObject.eventProperties;
+    if (!data.eventName) {
+      delete newObject[stringifyFieldList.eventProperties];
+    } else {
+      const properties: { [k: string]: any } = {};
+      Object.values(data.eventProperties).forEach(
+        ([key, value]) => (properties[key] = value)
+      );
+      newObject[stringifyFieldList.eventProperties] = properties;
+    }
     return newObject;
   });
 }
@@ -119,6 +128,13 @@ function validateContentsBlock(datas: ContentsBlockData[]): {
   failedAt: number;
   failedMessage: string;
 } {
+  if (datas.length === 0) {
+    return {
+      failedAt: -1,
+      failedMessage: "컨텐츠 블럭 목록이 비어있어요",
+    };
+  }
+
   const missingContentsUrlIndex = datas.findIndex((data) => !data.contentsUrl);
   if (missingContentsUrlIndex !== -1) {
     return {
@@ -132,7 +148,7 @@ function validateContentsBlock(datas: ContentsBlockData[]): {
   const missingLinkUrlIndex = datas.findIndex(
     (data) => data.linkType !== LinkType.None && !data.linkUrl
   );
-  if (missingContentsUrlIndex !== -1) {
+  if (missingLinkUrlIndex !== -1) {
     return {
       failedAt: missingLinkUrlIndex,
       failedMessage: `${
