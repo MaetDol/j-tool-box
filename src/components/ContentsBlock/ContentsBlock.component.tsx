@@ -6,7 +6,9 @@ import {
 } from "hooks";
 import {
   toRadioOptions,
-  useEventPropertyHandlers,
+  useContentInfoHandler,
+  useEventHandlers,
+  useLinkInfoHandler,
   useNewEventPropertyInputState,
 } from "./ContentsBlock.hooks";
 import {
@@ -22,30 +24,21 @@ interface Props {
 
 export default function ContentsBlock({ data, setData }: Props) {
   const updateData = () => setData({ ...data });
+
   const tryDeleteContentsBlcok = () => {
     const isDelete = window.confirm("Really want to delete?");
     if (isDelete) setData(undefined);
   };
 
-  const changeContentType = getRadioChangeHandler((value: ContentsType) => {
-    data.contentsType = value;
-    updateData();
-  });
-  const changeContentUrl = getInputChangeHandler((url: string) => {
-    data.contentsUrl = url;
-    updateData();
-  });
-
-  const changeEventName = getInputChangeHandler((name: string) => {
-    data.eventName = name;
-    updateData();
-  });
+  const { changeContentTypeHandler, changeContentUrlHandler } =
+    useContentInfoHandler(data, updateData);
 
   const {
     deleteProperty,
     getChangePropertyKeyHandler,
     getChangePropertyValueHandler,
-  } = useEventPropertyHandlers(data, updateData);
+    changeEventNameHandler,
+  } = useEventHandlers(data, updateData);
 
   const {
     handlePropertyNameInput,
@@ -64,14 +57,10 @@ export default function ContentsBlock({ data, setData }: Props) {
     updateData();
   };
 
-  const changeLinkType = getRadioChangeHandler((value: LinkType) => {
-    data.linkType = value;
-    updateData();
-  });
-  const changeLinkUrl = getInputChangeHandler((value) => {
-    data.linkUrl = value;
-    updateData();
-  });
+  const { changeLinkTypeHandler, changeLinkUrlHandler } = useLinkInfoHandler(
+    data,
+    updateData
+  );
 
   return (
     <Antd.Card hoverable>
@@ -91,14 +80,14 @@ export default function ContentsBlock({ data, setData }: Props) {
           options={toRadioOptions(ContentsType)}
           defaultValue={ContentsType.Image}
           value={data.contentsType}
-          onChange={changeContentType}
+          onChange={changeContentTypeHandler}
           optionType="button"
           buttonStyle="solid"
           style={{ minWidth: "fit-content" }}
         />
         <Antd.Input
           value={data.contentsUrl}
-          onChange={changeContentUrl}
+          onChange={changeContentUrlHandler}
           placeholder="https://url-to-contents"
         />
       </Antd.Input.Group>
@@ -111,7 +100,7 @@ export default function ContentsBlock({ data, setData }: Props) {
           options={toRadioOptions(LinkType)}
           defaultValue={LinkType.None}
           value={data.linkType}
-          onChange={changeLinkType}
+          onChange={changeLinkTypeHandler}
           optionType="button"
           buttonStyle="solid"
           style={{ minWidth: "fit-content" }}
@@ -120,7 +109,7 @@ export default function ContentsBlock({ data, setData }: Props) {
           placeholder="/program/products/250"
           disabled={data.linkType === LinkType.None}
           value={data.linkUrl}
-          onChange={changeLinkUrl}
+          onChange={changeLinkUrlHandler}
         />
       </Antd.Input.Group>
 
@@ -132,7 +121,7 @@ export default function ContentsBlock({ data, setData }: Props) {
           addonBefore="Name"
           placeholder="컨텐츠_이미지 Clicked"
           value={data.eventName}
-          onChange={changeEventName}
+          onChange={changeEventNameHandler}
         />
 
         <Antd.Input.Group style={{ display: "flex", marginTop: "16px" }}>

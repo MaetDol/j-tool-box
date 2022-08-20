@@ -1,6 +1,14 @@
 import { Antd } from "components";
-import { getInputChangeHandler, useStringInputState } from "hooks";
-import { ContentsBlockData } from "./ContentsBlock.model";
+import {
+  getInputChangeHandler,
+  getRadioChangeHandler,
+  useStringInputState,
+} from "hooks";
+import {
+  ContentsBlockData,
+  ContentsType,
+  LinkType,
+} from "./ContentsBlock.model";
 
 export function toRadioOptions(obj: Object): Antd.CheckboxOptionType[] {
   return Object.entries(obj).map(([label, value]) => ({ label, value }));
@@ -8,9 +16,9 @@ export function toRadioOptions(obj: Object): Antd.CheckboxOptionType[] {
 
 const FALSE = 0;
 const TRUE = 1;
-export function useEventPropertyHandlers(
+export function useEventHandlers(
   data: ContentsBlockData,
-  updateData: Function
+  updateData: () => void
 ) {
   const handlerFactory =
     (isPropertyValue: typeof TRUE | typeof FALSE) => (id: string) =>
@@ -27,10 +35,16 @@ export function useEventPropertyHandlers(
     updateData();
   };
 
+  const changeEventNameHandler = getInputChangeHandler((name: string) => {
+    data.eventName = name;
+    updateData();
+  });
+
   return {
     getChangePropertyKeyHandler,
     getChangePropertyValueHandler,
     deleteProperty,
+    changeEventNameHandler,
   };
 }
 
@@ -56,5 +70,45 @@ export function useNewEventPropertyInputState() {
     handlePropertyValueInput,
 
     getNewEventProperty,
+  };
+}
+
+export function useContentInfoHandler(
+  data: ContentsBlockData,
+  updateData: () => void
+) {
+  const changeContentTypeHandler = getRadioChangeHandler(
+    (value: ContentsType) => {
+      data.contentsType = value;
+      updateData();
+    }
+  );
+  const changeContentUrlHandler = getInputChangeHandler((url: string) => {
+    data.contentsUrl = url;
+    updateData();
+  });
+
+  return {
+    changeContentTypeHandler,
+    changeContentUrlHandler,
+  };
+}
+
+export function useLinkInfoHandler(
+  data: ContentsBlockData,
+  updateData: () => void
+) {
+  const changeLinkTypeHandler = getRadioChangeHandler((value: LinkType) => {
+    data.linkType = value;
+    updateData();
+  });
+  const changeLinkUrlHandler = getInputChangeHandler((value) => {
+    data.linkUrl = value;
+    updateData();
+  });
+
+  return {
+    changeLinkTypeHandler,
+    changeLinkUrlHandler,
   };
 }
