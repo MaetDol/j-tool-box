@@ -4,7 +4,9 @@ import {
   ContentsType,
   LinkType,
 } from "components/ContentsBlock";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 export default function ProgramContentsBlock() {
   const [contentsBlocks, setContentsBlocks] = useState<ContentsBlockData[]>([]);
@@ -29,6 +31,19 @@ export default function ProgramContentsBlock() {
       contentsBlocks[index] = data;
     }
     setContentsBlocks([...contentsBlocks]);
+  };
+
+  const reordered = useRef(false);
+  useEffect(() => {
+    reordered.current = false;
+  }, [contentsBlocks]);
+
+  const swapPosition = (a: number, b: number) => {
+    [contentsBlocks[a], contentsBlocks[b]] = [
+      contentsBlocks[b],
+      contentsBlocks[a],
+    ];
+    setContentsBlocks(contentsBlocks.slice(0));
   };
 
   return (
@@ -57,9 +72,18 @@ export default function ProgramContentsBlock() {
         </Antd.Typography.Paragraph>
       </Antd.Row>
 
-      {contentsBlocks.map((data, index) => (
-        <ContentsBlock key={data.id} data={data} setData={setData(index)} />
-      ))}
+      <DndProvider backend={HTML5Backend}>
+        {contentsBlocks.map((data, index) => (
+          <ContentsBlock
+            key={data.id}
+            data={data}
+            setData={setData(index)}
+            index={index}
+            swapPosition={swapPosition}
+            reorderedRef={reordered}
+          />
+        ))}
+      </DndProvider>
     </div>
   );
 }
