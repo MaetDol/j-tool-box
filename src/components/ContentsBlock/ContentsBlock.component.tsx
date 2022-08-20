@@ -68,6 +68,7 @@ export default function ContentsBlock({
     updateData
   );
 
+  // TODO: 드래그 앤 드롭 분리하기
   const ref = useRef<HTMLDivElement>(null);
   const [, drop] = useDrop<{
     index: number;

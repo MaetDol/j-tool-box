@@ -33,6 +33,7 @@ export default function ProgramContentsBlock() {
     setContentsBlocks([...contentsBlocks]);
   };
 
+  // TODO: 드래그앤드롭 관련 로직 분리
   const reordered = useRef(false);
   useEffect(() => {
     reordered.current = false;
