@@ -1,3 +1,5 @@
+import { Properties } from "components/PropertyItems";
+
 export const ContentsType = {
   Image: 1,
   Youtube: 2,
@@ -20,6 +22,6 @@ export type ContentsBlockData = {
   linkType: typeof LinkType[keyof typeof LinkType];
   linkUrl: string;
   eventName: string;
-  eventProperties: { [id: string]: [string, any] };
+  eventProperties: Properties;
   id?: number;
 };

@@ -1,13 +1,8 @@
-import { Antd } from "components";
-import {
-  getInputChangeHandler,
-  getRadioChangeHandler,
-  useStringInputState,
-} from "hooks";
+import { Antd, PropertyItems } from "components";
+import { getInputChangeHandler } from "hooks";
 import {
   toRadioOptions,
   useContentInfoHandler,
-  useEventHandlers,
   useLinkInfoHandler,
   useNewEventPropertyInputState,
 } from "./ContentsBlock.hooks";
@@ -33,12 +28,10 @@ export default function ContentsBlock({ data, setData }: Props) {
   const { changeContentTypeHandler, changeContentUrlHandler } =
     useContentInfoHandler(data, updateData);
 
-  const {
-    deleteProperty,
-    getChangePropertyKeyHandler,
-    getChangePropertyValueHandler,
-    changeEventNameHandler,
-  } = useEventHandlers(data, updateData);
+  const changeEventNameHandler = getInputChangeHandler((name: string) => {
+    data.eventName = name;
+    updateData();
+  });
 
   const {
     handlePropertyNameInput,
@@ -152,34 +145,10 @@ export default function ContentsBlock({ data, setData }: Props) {
           </Antd.Button>
         </Antd.Input.Group>
 
-        {Object.entries(data.eventProperties).map(([id, [name, value]]) => (
-          <Antd.Input.Group
-            key={id}
-            style={{ display: "flex", marginTop: "16px" }}
-          >
-            <div style={{ width: "40px" }} />
-            <Antd.Input
-              prefix={'{ " '}
-              suffix={' " '}
-              addonAfter=":"
-              placeholder="property name"
-              style={{ flex: "1", minWidth: "240px" }}
-              value={name}
-              onChange={getChangePropertyKeyHandler(id)}
-            />
-            <Antd.Input
-              placeholder="property value"
-              prefix={' " '}
-              suffix={' " }'}
-              style={{ flex: "3", borderLeft: 0 }}
-              value={value}
-              onChange={getChangePropertyValueHandler(id)}
-            />
-            <Antd.Button type="primary" danger onClick={deleteProperty(id)}>
-              Delete
-            </Antd.Button>
-          </Antd.Input.Group>
-        ))}
+        <PropertyItems
+          properties={data.eventProperties}
+          updateProperties={updateData}
+        />
       </Antd.Input.Group>
     </Antd.Card>
   );
