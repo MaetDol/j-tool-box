@@ -3,7 +3,9 @@ import {
   ContentsBlockData,
   ContentsType,
   LinkType,
+  stringifyContentsBlocks,
 } from "components/ContentsBlock";
+import { copy } from "hooks";
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -47,6 +49,19 @@ export default function ProgramContentsBlock() {
     setContentsBlocks(contentsBlocks.slice(0));
   };
 
+  const tryCopy = () => {
+    const { failedAt, failedMessage, result } =
+      stringifyContentsBlocks(contentsBlocks);
+
+    if (failedMessage) {
+      alert(failedMessage);
+      return;
+    }
+    copy(result)
+      .then(() => alert("Copied JSON data"))
+      .catch(console.log);
+  };
+
   return (
     <div
       style={{
@@ -65,7 +80,11 @@ export default function ProgramContentsBlock() {
         >
           Add Contents Block
         </Antd.Button>
-        <Antd.Button size="large" style={{ marginRight: "16px" }}>
+        <Antd.Button
+          size="large"
+          style={{ marginRight: "16px" }}
+          onClick={tryCopy}
+        >
           Copy
         </Antd.Button>
         <Antd.Typography.Paragraph style={{ margin: 0 }}>
