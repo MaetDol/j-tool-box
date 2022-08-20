@@ -6,5 +6,8 @@ export type MenuItem = Required<MenuProps>["items"][number];
 
 export const items = [
   item("Home", URLs.HOME),
-  item("Program", URLs.PROGRAM, null, [item("QnA", URLs.PROGRAM_QNA)]),
+  item("Program", URLs.PROGRAM, null, [
+    item("QnA", URLs.PROGRAM_QNA),
+    item("Contents Block", URLs.PROGRAM_CONTENTS_BLOCK),
+  ]),
 ];
