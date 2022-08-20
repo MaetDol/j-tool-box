@@ -78,3 +78,71 @@ export function useLinkInfoHandler(
     changeLinkUrlHandler,
   };
 }
+
+export function stringifyContentsBlocks(datas: ContentsBlockData[]): {
+  result: string;
+  failedMessage: string;
+  failedAt: number;
+} {
+  const { failedAt, failedMessage } = validateContentsBlock(datas);
+  return {
+    result: failedMessage ? "" : JSON.stringify(filterField(datas), null, 4),
+    failedAt,
+    failedMessage,
+  };
+}
+
+function filterField(datas: ContentsBlockData[]): Object {
+  const stringifyFieldList = {
+    contentsType: "contents_type",
+    contentsUrl: "contents_url",
+    linkType: "link_type",
+    linkUrl: "link_url",
+    eventName: "event_name",
+    eventProperties: "event_properties",
+  } as const;
+  const keys = Object.keys(
+    stringifyFieldList
+  ) as (keyof typeof stringifyFieldList)[];
+
+  return datas.map((data) => {
+    const newObject: { [k: string]: any } = {};
+    keys.forEach((key) => {
+      if (data[key]) newObject[key] = data[key];
+    });
+    if (!newObject.eventName) delete newObject.eventProperties;
+    return newObject;
+  });
+}
+
+function validateContentsBlock(datas: ContentsBlockData[]): {
+  failedAt: number;
+  failedMessage: string;
+} {
+  const missingContentsUrlIndex = datas.findIndex((data) => !data.contentsUrl);
+  if (missingContentsUrlIndex !== -1) {
+    return {
+      failedAt: missingContentsUrlIndex,
+      failedMessage: `${
+        missingContentsUrlIndex + 1
+      } 번째 블록에 contents_url 이 누락된 것 같아요`,
+    };
+  }
+
+  const missingLinkUrlIndex = datas.findIndex(
+    (data) => data.linkType !== LinkType.None && !data.linkUrl
+  );
+  if (missingContentsUrlIndex !== -1) {
+    return {
+      failedAt: missingLinkUrlIndex,
+      failedMessage: `${
+        missingLinkUrlIndex + 1
+      } 번째 블록의 Link type이 None이 아니지만, 링크가 제공되지 않았어요`,
+    };
+  }
+
+  return {
+    failedAt: -1,
+    failedMessage: "",
+  };
+}
