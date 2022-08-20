@@ -50,19 +50,45 @@ export default function ProgramContentsBlock() {
   };
 
   const [focusingIndex, setFocus] = useState(-1);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alert, setAlert] = useState(false);
+  const showAlert = (msg: string) => {
+    setAlertMessage(msg);
+    setAlert(true);
+    setTimeout(() => {
+      setFocus(-1);
+      setAlert(false);
+    }, 2500);
+  };
+
   const tryCopy = () => {
     const { failedMessage, failedAt, result } =
       stringifyContentsBlocks(contentsBlocks);
 
     if (failedMessage) {
       setFocus(failedAt);
-      alert(failedMessage);
+      showAlert(failedMessage);
       return;
     }
     copy(result)
-      .then(() => alert("Copied JSON data"))
+      .then(() => showAlert("Contents Block JSON 복사 완료 했어요"))
       .catch(console.error);
   };
+  const alertStyle: React.CSSProperties = {
+    transition: "0.2s transform, 0.2s opacity",
+    overflow: "hidden",
+    position: "fixed",
+    top: "4%",
+    right: "4%",
+    zIndex: 1,
+    boxShadow: "2px 2px 16px 0 rgba(0, 0, 0, 0.1)",
+    transform: "scale(0.8)",
+    opacity: 0,
+  };
+  if (alert) {
+    alertStyle.opacity = 1;
+    alertStyle.transform = "scale(1)";
+  }
 
   return (
     <div
@@ -73,6 +99,7 @@ export default function ProgramContentsBlock() {
         gap: "16px",
       }}
     >
+      <Antd.Alert message={alertMessage} type="error" style={alertStyle} />
       <Antd.Row align="middle">
         <Antd.Button
           type="primary"

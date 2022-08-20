@@ -128,6 +128,13 @@ function validateContentsBlock(datas: ContentsBlockData[]): {
   failedAt: number;
   failedMessage: string;
 } {
+  if (datas.length === 0) {
+    return {
+      failedAt: -1,
+      failedMessage: "컨텐츠 블럭 목록이 비어있어요",
+    };
+  }
+
   const missingContentsUrlIndex = datas.findIndex((data) => !data.contentsUrl);
   if (missingContentsUrlIndex !== -1) {
     return {
