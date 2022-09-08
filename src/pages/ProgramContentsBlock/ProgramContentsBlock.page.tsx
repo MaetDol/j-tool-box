@@ -3,26 +3,38 @@ import {
   ContentsBlockData,
   ContentsType,
   LinkType,
+  RawContentsBlockData,
   stringifyContentsBlocks,
 } from "components/ContentsBlock";
+import { Properties } from "components/PropertyItems";
 import { copy } from "hooks";
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 export default function ProgramContentsBlock() {
+  const contentsBlockIdRef = useRef(0);
   const [contentsBlocks, setContentsBlocks] = useState<ContentsBlockData[]>([]);
-  const addContentsBlock = () => {
-    setContentsBlocks([
-      ...contentsBlocks,
+  const addContentsBlock = (initialData?: ContentsBlockData) => {
+    const {
+      contentsType = ContentsType.Image,
+      contentsUrl = "",
+      eventName = "",
+      eventProperties = {},
+      linkType = LinkType.None,
+      linkUrl = "",
+    } = initialData || {};
+
+    setContentsBlocks((previousBlocks) => [
+      ...previousBlocks,
       {
-        contentsType: ContentsType.Image,
-        contentsUrl: "",
-        eventName: "",
-        eventProperties: {},
-        linkType: LinkType.None,
-        linkUrl: "",
-        id: Date.now(),
+        contentsType,
+        contentsUrl,
+        eventName,
+        eventProperties,
+        linkType,
+        linkUrl,
+        id: contentsBlockIdRef.current++,
       },
     ]);
   };
@@ -80,7 +92,7 @@ export default function ProgramContentsBlock() {
     position: "fixed",
     top: "4%",
     right: "4%",
-    zIndex: 1,
+    zIndex: 1001, // 모달의 z-index 가 1000 인듯 함
     boxShadow: "2px 2px 16px 0 rgba(0, 0, 0, 0.1)",
     transform: "scale(0.8)",
     opacity: 0,
@@ -89,6 +101,52 @@ export default function ProgramContentsBlock() {
     alertStyle.opacity = 1;
     alertStyle.transform = "scale(1)";
   }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showInputModal = () => setIsModalOpen(true);
+  const closeInputModal = () => setIsModalOpen(false);
+  const [jsonInput, setJsonInput] = useState("");
+  const confirmInputModal = () => {
+    let parsedJson: RawContentsBlockData[];
+    try {
+      parsedJson = JSON.parse(jsonInput);
+    } catch {
+      showAlert("JSON 파싱에 실패했어요");
+      return;
+    }
+
+    if (!Array.isArray(parsedJson)) {
+      showAlert("컨텐츠 블럭 타입이 잘못됐어요. 배열로 주세요!");
+      return;
+    }
+
+    setContentsBlocks([]);
+    parsedJson.forEach(
+      ({
+        contents_type,
+        contents_url,
+        event_name,
+        event_properties,
+        link_type,
+        link_url,
+      }) =>
+        addContentsBlock({
+          contentsType: contents_type,
+          contentsUrl: contents_url,
+          eventName: event_name,
+          eventProperties: Object.entries(event_properties || {}).reduce(
+            (properties, keyValuePair, i): Properties =>
+              Object.assign(properties, { [i]: keyValuePair }),
+            {}
+          ),
+          linkType: link_type,
+          linkUrl: link_url,
+        })
+    );
+
+    showAlert("성공적으로 JSON 을 불러왔어요");
+    closeInputModal();
+  };
 
   return (
     <div
@@ -104,10 +162,17 @@ export default function ProgramContentsBlock() {
         <Antd.Button
           type="primary"
           size="large"
-          onClick={addContentsBlock}
+          onClick={() => addContentsBlock()}
           style={{ marginRight: "16px" }}
         >
           Add Contents Block
+        </Antd.Button>
+        <Antd.Button
+          size="large"
+          onClick={showInputModal}
+          style={{ marginRight: "16px" }}
+        >
+          Edit from JSON
         </Antd.Button>
         <Antd.Button
           size="large"
@@ -134,6 +199,20 @@ export default function ProgramContentsBlock() {
           />
         ))}
       </DndProvider>
+
+      <Antd.Modal
+        title="불러올 콘텐츠 블럭 JSON을 입력해주세요"
+        visible={isModalOpen}
+        onOk={confirmInputModal}
+        onCancel={closeInputModal}
+        afterClose={() => setJsonInput("")}
+      >
+        <Antd.Input.TextArea
+          autoSize
+          value={jsonInput}
+          onChange={(e) => setJsonInput(e.target.value)}
+        />
+      </Antd.Modal>
     </div>
   );
 }
