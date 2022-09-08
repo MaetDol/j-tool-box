@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useAlert, useContentsBlock } from "./ProgramContentsBlock.hooks";
+import { contentsBlocksFromJson } from "./ProgramContentsBlock.utils";
 
 export default function ProgramContentsBlock() {
   const {
@@ -57,42 +58,12 @@ export default function ProgramContentsBlock() {
   const closeInputModal = () => setIsModalOpen(false);
   const [jsonInput, setJsonInput] = useState("");
   const confirmInputModal = () => {
-    let parsedJson: RawContentsBlockData[];
-    try {
-      parsedJson = JSON.parse(jsonInput);
-    } catch {
-      showAlert("JSON 파싱에 실패했어요");
-      return;
+    const parsedContentsBlocks = contentsBlocksFromJson(jsonInput);
+    if (typeof parsedContentsBlocks === "string") {
+      return showAlert(parsedContentsBlocks);
     }
 
-    if (!Array.isArray(parsedJson)) {
-      showAlert("컨텐츠 블럭 타입이 잘못됐어요. 배열로 주세요!");
-      return;
-    }
-
-    setContentsBlocks([]);
-    parsedJson.forEach(
-      ({
-        contents_type,
-        contents_url,
-        event_name,
-        event_properties,
-        link_type,
-        link_url,
-      }) =>
-        addNewContentsBlock({
-          contentsType: contents_type,
-          contentsUrl: contents_url,
-          eventName: event_name,
-          eventProperties: Object.entries(event_properties || {}).reduce(
-            (properties, keyValuePair, i): Properties =>
-              Object.assign(properties, { [i]: keyValuePair }),
-            {}
-          ),
-          linkType: link_type,
-          linkUrl: link_url,
-        })
-    );
+    setContentsBlocks(parsedContentsBlocks);
 
     showAlert("성공적으로 JSON 을 불러왔어요");
     closeInputModal();
