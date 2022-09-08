@@ -25,3 +25,12 @@ export type ContentsBlockData = {
   eventProperties: Properties;
   id?: number;
 };
+
+export type RawContentsBlockData = {
+  contents_type: ContentsType;
+  contents_url: string;
+  link_type: typeof LinkType[keyof typeof LinkType];
+  link_url: string;
+  event_name: string;
+  event_properties: Object;
+};
