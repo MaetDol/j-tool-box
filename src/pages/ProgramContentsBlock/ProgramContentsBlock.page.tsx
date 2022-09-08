@@ -11,7 +11,7 @@ import { copy } from "hooks";
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useContentsBlock } from "./ProgramContentsBlock.hooks";
+import { useAlert, useContentsBlock } from "./ProgramContentsBlock.hooks";
 
 export default function ProgramContentsBlock() {
   const {
@@ -36,16 +36,7 @@ export default function ProgramContentsBlock() {
   };
 
   const [focusingIndex, setFocus] = useState(-1);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alert, setAlert] = useState(false);
-  const showAlert = (msg: string) => {
-    setAlertMessage(msg);
-    setAlert(true);
-    setTimeout(() => {
-      setFocus(-1);
-      setAlert(false);
-    }, 2500);
-  };
+  const { alertMessage, showAlert, alertStyle } = useAlert();
 
   const tryCopy = () => {
     const { failedMessage, failedAt, result } =
@@ -53,28 +44,13 @@ export default function ProgramContentsBlock() {
 
     if (failedMessage) {
       setFocus(failedAt);
-      showAlert(failedMessage);
+      showAlert(failedMessage, () => setFocus(-1));
       return;
     }
     copy(result)
       .then(() => showAlert("Contents Block JSON 복사 완료 했어요"))
       .catch(console.error);
   };
-  const alertStyle: React.CSSProperties = {
-    transition: "0.2s transform, 0.2s opacity",
-    overflow: "hidden",
-    position: "fixed",
-    top: "4%",
-    right: "4%",
-    zIndex: 1001, // 모달의 z-index 가 1000 인듯 함
-    boxShadow: "2px 2px 16px 0 rgba(0, 0, 0, 0.1)",
-    transform: "scale(0.8)",
-    opacity: 0,
-  };
-  if (alert) {
-    alertStyle.opacity = 1;
-    alertStyle.transform = "scale(1)";
-  }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showInputModal = () => setIsModalOpen(true);
