@@ -11,41 +11,15 @@ import { copy } from "hooks";
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useContentsBlock } from "./ProgramContentsBlock.hooks";
 
 export default function ProgramContentsBlock() {
-  const contentsBlockIdRef = useRef(0);
-  const [contentsBlocks, setContentsBlocks] = useState<ContentsBlockData[]>([]);
-  const addContentsBlock = (initialData?: ContentsBlockData) => {
-    const {
-      contentsType = ContentsType.Image,
-      contentsUrl = "",
-      eventName = "",
-      eventProperties = {},
-      linkType = LinkType.None,
-      linkUrl = "",
-    } = initialData || {};
-
-    setContentsBlocks((previousBlocks) => [
-      ...previousBlocks,
-      {
-        contentsType,
-        contentsUrl,
-        eventName,
-        eventProperties,
-        linkType,
-        linkUrl,
-        id: contentsBlockIdRef.current++,
-      },
-    ]);
-  };
-  const setData = (index: number) => (data: ContentsBlockData | undefined) => {
-    if (!data) {
-      contentsBlocks.splice(index, 1);
-    } else {
-      contentsBlocks[index] = data;
-    }
-    setContentsBlocks([...contentsBlocks]);
-  };
+  const {
+    contentsBlocks,
+    addNewContentsBlock,
+    updateContentsBlock,
+    setContentsBlocks,
+  } = useContentsBlock();
 
   // TODO: 드래그앤드롭 관련 로직 분리
   const reordered = useRef(false);
@@ -130,7 +104,7 @@ export default function ProgramContentsBlock() {
         link_type,
         link_url,
       }) =>
-        addContentsBlock({
+        addNewContentsBlock({
           contentsType: contents_type,
           contentsUrl: contents_url,
           eventName: event_name,
@@ -162,7 +136,7 @@ export default function ProgramContentsBlock() {
         <Antd.Button
           type="primary"
           size="large"
-          onClick={() => addContentsBlock()}
+          onClick={() => addNewContentsBlock()}
           style={{ marginRight: "16px" }}
         >
           Add Contents Block
@@ -191,7 +165,7 @@ export default function ProgramContentsBlock() {
           <ContentsBlock
             key={data.id}
             data={data}
-            setData={setData(index)}
+            setData={(data) => updateContentsBlock(index, data)}
             index={index}
             swapPosition={swapPosition}
             reorderedRef={reordered}
