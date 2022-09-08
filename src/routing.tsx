@@ -1,13 +1,14 @@
-import { Home, ProgramContentsBlock, ProgramQna } from 'pages';
-import { useRoutes } from 'react-router-dom';
+import { Home, ProgramCard, ProgramContentsBlock, ProgramQna } from "pages";
+import { useRoutes } from "react-router-dom";
 
 export enum URLs {
-  HOME = '/',
+  HOME = "/",
 
-  PROGRAM = '/program',
-  PROGRAM_QNA = '/program/qna',
-  PROGRAM_CONTENTS_BLOCK = '/program/contents-block',
-};
+  PROGRAM = "/program",
+  PROGRAM_QNA = "/program/qna",
+  PROGRAM_CONTENTS_BLOCK = "/program/contents-block",
+  PROGRAM_CARD = "/program/card",
+}
 
 export default function Routings() {
   const routes = useRoutes([
@@ -22,6 +23,10 @@ export default function Routings() {
     {
       path: URLs.PROGRAM_CONTENTS_BLOCK,
       element: <ProgramContentsBlock />,
+    },
+    {
+      path: URLs.PROGRAM_CARD,
+      element: <ProgramCard />,
     },
   ]);
 
