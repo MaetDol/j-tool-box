@@ -220,19 +220,6 @@ export default function ProgramCard() {
             value={packageId}
             onChange={setPackageId}
           />
-          연결 유형
-          <Antd.Radio.Group
-            style={{ marginLeft: "8px" }}
-            buttonStyle="solid"
-            optionType="button"
-            options={[
-              { label: "없음", value: ProgramCardLinkType.없음 },
-              { label: "내부", value: ProgramCardLinkType.내부 },
-              { label: "외부", value: ProgramCardLinkType.외부 },
-            ]}
-            value={linkType}
-            onChange={setLinkType}
-          />
         </Antd.Input.Group>
         <Antd.Input.Group>
           과목 유형
@@ -258,6 +245,18 @@ export default function ProgramCard() {
         </Antd.Input.Group>
         <Antd.Input.Group>
           연결 url
+          <Antd.Radio.Group
+            style={{ margin: "8px 8px" }}
+            buttonStyle="solid"
+            optionType="button"
+            options={[
+              { label: "없음", value: ProgramCardLinkType.없음 },
+              { label: "내부", value: ProgramCardLinkType.내부 },
+              { label: "외부", value: ProgramCardLinkType.외부 },
+            ]}
+            value={linkType}
+            onChange={setLinkType}
+          />
           <Antd.Input placeholder="" value={linkUrl} onChange={setLinkUrl} />
         </Antd.Input.Group>
         <Antd.Input.Group>
