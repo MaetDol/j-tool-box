@@ -42,9 +42,7 @@ export default function ProgramCard() {
   const [isShowing, setIsShowing] = useCheckboxState(true);
   const [isShowingEndDate, setIsShowingEndDate] = useCheckboxState(false);
 
-  const [recommendAgeSlider, setRecommendAgeSlider] = useState<
-    [number, number]
-  >([4, 13]);
+  const [recommendAges, setRecommendAges] = useState<number[]>([]);
 
   const [conceptType, setConceptType] = useRadioState<ProgramCardConceptType>(
     ProgramCardConceptType.일반
@@ -87,8 +85,8 @@ export default function ProgramCard() {
           setIsShowingEndDate={setIsShowingEndDate}
         />
         <RecommendAgeSlider
-          recommendAgeSlider={recommendAgeSlider}
-          setRecommendAgeSlider={setRecommendAgeSlider}
+          recommendAges={recommendAges}
+          setRecommendAges={setRecommendAges}
         />
         <ConceptTypeRadio
           conceptType={conceptType}
