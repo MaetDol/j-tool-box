@@ -1,12 +1,5 @@
 import { Antd, ContentsBlock } from "components";
-import {
-  ContentsBlockData,
-  ContentsType,
-  LinkType,
-  RawContentsBlockData,
-  stringifyContentsBlocks,
-} from "components/ContentsBlock";
-import { Properties } from "components/PropertyItems";
+import { stringifyContentsBlocks } from "components/ContentsBlock";
 import { copy } from "hooks";
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
