@@ -1,4 +1,5 @@
 import type { RadioChangeEvent } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import type { ChangeEvent } from "react";
 import React, { useCallback, useState } from "react";
 import { connect } from "./connect";
@@ -50,6 +51,13 @@ export function useSelectState<T>(defaultValue: T) {
   return useInputState<T, T>(defaultValue, (handler) => handler);
 }
 
+export function useCheckboxState(defaultValue: boolean) {
+  return useInputState<boolean, ChangeInputEvent | CheckboxChangeEvent>(
+    defaultValue,
+    getCheckboxChangeHandler
+  );
+}
+
 export function getInputValue(e: ChangeInputEvent | ChangeTextAreaEvent) {
   return e.target.value;
 }
@@ -72,4 +80,8 @@ export function getNumberInputChangeHandler(handler: (value: number) => void) {
 
 export function getRadioChangeHandler<T>(handler: (value: T) => void) {
   return connect(getRadioValue, handler);
+}
+
+function getCheckboxChangeHandler(handler: (checked: boolean) => void) {
+  return connect((e: ChangeInputEvent) => e.target.checked, handler);
 }
