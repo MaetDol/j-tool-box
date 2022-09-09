@@ -1,46 +1,53 @@
+import type { RadioChangeEvent } from "antd";
 import type { ChangeEvent } from "react";
 import React, { useCallback, useState } from "react";
 import { connect } from "./connect";
 
 type ChangeTextAreaEvent = ChangeEvent<HTMLTextAreaElement>;
 type ChangeInputEvent = ChangeEvent<HTMLInputElement>;
-type ChangeRadioEvent = ChangeEvent<HTMLSelectElement>;
+type ChangeRadioEvent = ChangeEvent<HTMLInputElement>;
 
-function useInputState<T, E extends HTMLElement>(
+function useInputState<T, EventType>(
   defaultValue: T,
   getInputValueThen: (
     dispatcher: React.Dispatch<React.SetStateAction<T>>
-  ) => React.ChangeEventHandler<E>
+  ) => (e: EventType) => void
 ) {
   const [input, setInput] = useState(defaultValue);
 
-  const handler: React.ChangeEventHandler<E> = useCallback(
-    getInputValueThen(setInput),
-    []
-  );
+  const handler = useCallback(getInputValueThen(setInput), []);
 
   return [input, handler, setInput] as const;
 }
 
 export function useStringInputState(defaultValue: string) {
-  return useInputState<string, HTMLInputElement | HTMLTextAreaElement>(
+  return useInputState<string, ChangeInputEvent | ChangeTextAreaEvent>(
     defaultValue,
     getInputChangeHandler
   );
 }
 
 export function useNumberInputState(defaultValue: number) {
-  return useInputState<number, HTMLInputElement>(
+  return useInputState<number, ChangeInputEvent>(
     defaultValue,
     getNumberInputChangeHandler
   );
 }
 
 export function useRadioState<T>(defaultValue: T) {
-  return useInputState<T, HTMLInputElement>(
+  return useInputState<T, ChangeRadioEvent | RadioChangeEvent>(
     defaultValue,
     getRadioChangeHandler
   );
+}
+
+/**
+ * Antd Select 전용
+ * @param defaultValue
+ * @returns
+ */
+export function useSelectState<T>(defaultValue: T) {
+  return useInputState<T, T>(defaultValue, (handler) => handler);
 }
 
 export function getInputValue(e: ChangeInputEvent | ChangeTextAreaEvent) {
