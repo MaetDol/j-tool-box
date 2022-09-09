@@ -306,6 +306,18 @@ export default function ProgramCard() {
             </Antd.Select.Option>
           </Antd.Select>
         </Antd.Input.Group>
+        <Antd.Input.Group style={{ marginTop: "48px" }}>
+          <Antd.Button
+            style={{ marginRight: "24px" }}
+            size="large"
+            type="primary"
+          >
+            스프레드 시트에 붙여넣을거에요!
+          </Antd.Button>
+          <Antd.Button size="large" type="primary">
+            INSERT 바로 할거에요!
+          </Antd.Button>
+        </Antd.Input.Group>
       </Antd.Space>
     </div>
   );
