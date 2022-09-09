@@ -1,4 +1,4 @@
-import { Antd } from "components";
+import { Antd, RequiredAsterisk } from "components";
 import {
   useCheckboxState,
   useRadioState,
@@ -60,6 +60,7 @@ export default function ProgramCard() {
       <Antd.Space direction="vertical" size="large">
         <Antd.Input.Group>
           카드 타이틀
+          <RequiredAsterisk />
           <Antd.Input.TextArea
             value={title}
             onChange={setTitle}
@@ -69,6 +70,7 @@ export default function ProgramCard() {
         </Antd.Input.Group>
         <Antd.Input.Group>
           카드 서브타이틀
+          <RequiredAsterisk />
           <Antd.Input
             value={subtitle}
             onChange={setSubtitle}
@@ -119,6 +121,7 @@ export default function ProgramCard() {
         </Antd.Input.Group>
         <Antd.Input.Group>
           썸네일 주소
+          <RequiredAsterisk />
           <Antd.Input
             value={thumbnail}
             onChange={setThumbnail}
@@ -137,7 +140,7 @@ export default function ProgramCard() {
           </Antd.Checkbox>
         </Antd.Input.Group>
         <Antd.Input.Group>
-          추천 연령
+          추천 연령 <RequiredAsterisk />
           <div style={{ display: "flex" }}>
             <Antd.InputNumber
               min={2}
@@ -167,7 +170,9 @@ export default function ProgramCard() {
                 setRecommendAgeSlider((prev) => [prev[0], num])
               }
             />
-            <Antd.Button style={{ marginLeft: "8px" }}>추가하기</Antd.Button>
+            <Antd.Button style={{ marginLeft: "8px" }} type="primary">
+              적용하기
+            </Antd.Button>
           </div>
         </Antd.Input.Group>
         <Antd.Input.Group style={{ marginBottom: "16px" }}>
@@ -185,7 +190,7 @@ export default function ProgramCard() {
           />
         </Antd.Input.Group>
         <Antd.Input.Group>
-          노출 기간
+          노출 기간 <RequiredAsterisk />
           <Antd.DatePicker.RangePicker
             showTime
             onChange={(_, formatedDates) => setOpenDuration(formatedDates)}
@@ -257,7 +262,12 @@ export default function ProgramCard() {
             value={linkType}
             onChange={setLinkType}
           />
-          <Antd.Input placeholder="" value={linkUrl} onChange={setLinkUrl} />
+          <Antd.Input
+            placeholder="https://notion.so"
+            disabled={linkType === ProgramCardLinkType.없음}
+            value={linkUrl}
+            onChange={setLinkUrl}
+          />
         </Antd.Input.Group>
         <Antd.Input.Group>
           콘텐츠 블럭 <Antd.Input.TextArea />
