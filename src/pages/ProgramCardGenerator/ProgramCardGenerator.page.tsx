@@ -130,7 +130,7 @@ export default function ProgramCardGenerator() {
       +hasKit,
       target,
     ];
-    // TODO validating
+
     copy(fields.join("\t")).then(() =>
       showAlert("스프레드 시트용! 복사했어요~!")
     );
@@ -222,9 +222,6 @@ export default function ProgramCardGenerator() {
             onClick={copyForSpreadSheet}
           >
             스프레드 시트에 붙여넣을거에요!
-          </Antd.Button>
-          <Antd.Button size="large" type="primary">
-            INSERT 바로 할거에요!
           </Antd.Button>
         </Antd.Input.Group>
       </Antd.Space>
