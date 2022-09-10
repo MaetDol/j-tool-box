@@ -1,39 +1,19 @@
 import { Antd, ContentsBlock } from "components";
-import {
-  ContentsBlockData,
-  ContentsType,
-  LinkType,
-  stringifyContentsBlocks,
-} from "components/ContentsBlock";
+import { stringifyContentsBlocks } from "components/ContentsBlock";
 import { copy } from "hooks";
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useAlert, useContentsBlock } from "./ProgramContentsBlock.hooks";
+import { contentsBlocksFromJson } from "./ProgramContentsBlock.utils";
 
 export default function ProgramContentsBlock() {
-  const [contentsBlocks, setContentsBlocks] = useState<ContentsBlockData[]>([]);
-  const addContentsBlock = () => {
-    setContentsBlocks([
-      ...contentsBlocks,
-      {
-        contentsType: ContentsType.Image,
-        contentsUrl: "",
-        eventName: "",
-        eventProperties: {},
-        linkType: LinkType.None,
-        linkUrl: "",
-        id: Date.now(),
-      },
-    ]);
-  };
-  const setData = (index: number) => (data: ContentsBlockData | undefined) => {
-    if (!data) {
-      contentsBlocks.splice(index, 1);
-    } else {
-      contentsBlocks[index] = data;
-    }
-    setContentsBlocks([...contentsBlocks]);
-  };
+  const {
+    contentsBlocks,
+    addNewContentsBlock,
+    updateContentsBlock,
+    setContentsBlocks,
+  } = useContentsBlock();
 
   // TODO: 드래그앤드롭 관련 로직 분리
   const reordered = useRef(false);
@@ -50,16 +30,7 @@ export default function ProgramContentsBlock() {
   };
 
   const [focusingIndex, setFocus] = useState(-1);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alert, setAlert] = useState(false);
-  const showAlert = (msg: string) => {
-    setAlertMessage(msg);
-    setAlert(true);
-    setTimeout(() => {
-      setFocus(-1);
-      setAlert(false);
-    }, 2500);
-  };
+  const { alertMessage, showAlert, alertStyle } = useAlert();
 
   const tryCopy = () => {
     const { failedMessage, failedAt, result } =
@@ -67,28 +38,29 @@ export default function ProgramContentsBlock() {
 
     if (failedMessage) {
       setFocus(failedAt);
-      showAlert(failedMessage);
+      showAlert(failedMessage, () => setFocus(-1));
       return;
     }
     copy(result)
       .then(() => showAlert("Contents Block JSON 복사 완료 했어요"))
       .catch(console.error);
   };
-  const alertStyle: React.CSSProperties = {
-    transition: "0.2s transform, 0.2s opacity",
-    overflow: "hidden",
-    position: "fixed",
-    top: "4%",
-    right: "4%",
-    zIndex: 1,
-    boxShadow: "2px 2px 16px 0 rgba(0, 0, 0, 0.1)",
-    transform: "scale(0.8)",
-    opacity: 0,
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showInputModal = () => setIsModalOpen(true);
+  const closeInputModal = () => setIsModalOpen(false);
+  const [jsonInput, setJsonInput] = useState("");
+  const confirmInputModal = () => {
+    const parsedContentsBlocks = contentsBlocksFromJson(jsonInput);
+    if (typeof parsedContentsBlocks === "string") {
+      return showAlert(parsedContentsBlocks);
+    }
+
+    setContentsBlocks(parsedContentsBlocks);
+
+    showAlert("성공적으로 JSON 을 불러왔어요");
+    closeInputModal();
   };
-  if (alert) {
-    alertStyle.opacity = 1;
-    alertStyle.transform = "scale(1)";
-  }
 
   return (
     <div
@@ -100,14 +72,31 @@ export default function ProgramContentsBlock() {
       }}
     >
       <Antd.Alert message={alertMessage} type="error" style={alertStyle} />
-      <Antd.Row align="middle">
+      <Antd.Row
+        align="middle"
+        style={{
+          position: "sticky",
+          top: "0",
+          paddingTop: "16px",
+          zIndex: "2",
+          backdropFilter: "blur(16px)",
+          backgroundColor: "rgba(255,255,255,0.5)",
+        }}
+      >
         <Antd.Button
           type="primary"
           size="large"
-          onClick={addContentsBlock}
+          onClick={() => addNewContentsBlock()}
           style={{ marginRight: "16px" }}
         >
           Add Contents Block
+        </Antd.Button>
+        <Antd.Button
+          size="large"
+          onClick={showInputModal}
+          style={{ marginRight: "16px" }}
+        >
+          Edit from JSON
         </Antd.Button>
         <Antd.Button
           size="large"
@@ -126,7 +115,7 @@ export default function ProgramContentsBlock() {
           <ContentsBlock
             key={data.id}
             data={data}
-            setData={setData(index)}
+            setData={(data) => updateContentsBlock(index, data)}
             index={index}
             swapPosition={swapPosition}
             reorderedRef={reordered}
@@ -134,6 +123,20 @@ export default function ProgramContentsBlock() {
           />
         ))}
       </DndProvider>
+
+      <Antd.Modal
+        title="불러올 콘텐츠 블럭 JSON을 입력해주세요"
+        open={isModalOpen}
+        onOk={confirmInputModal}
+        onCancel={closeInputModal}
+        afterClose={() => setJsonInput("")}
+      >
+        <Antd.Input.TextArea
+          autoSize
+          value={jsonInput}
+          onChange={(e) => setJsonInput(e.target.value)}
+        />
+      </Antd.Modal>
     </div>
   );
 }

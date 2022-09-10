@@ -9,5 +9,6 @@ export const items = [
   item("Program", URLs.PROGRAM, null, [
     item("QnA", URLs.PROGRAM_QNA),
     item("Contents Block", URLs.PROGRAM_CONTENTS_BLOCK),
+    item("Card", URLs.PROGRAM_CARD),
   ]),
 ];

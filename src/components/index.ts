@@ -5,3 +5,4 @@ export { default as QnaParser } from "./QnaParser";
 export { default as ContentsBlock } from "./ContentsBlock";
 export { default as PropertyItems } from "./PropertyItems";
 export { default as PropertyItem } from "./PropertyItem";
+export { default as RequiredAsterisk } from "./RequiredAsterisk";

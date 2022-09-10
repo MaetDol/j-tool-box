@@ -1,0 +1,105 @@
+.card {
+  margin: 2rem;
+  background-color: #ffffff;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.16);
+  border-radius: 24px;
+}
+
+.program-card {
+  width: 100%;
+  border-radius: 24px;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.program-card.p001 .program-card__info {
+  padding: 3.2rem 2rem;
+}
+
+.program-card.p001 .program-card__img {
+  height: 21.4rem;
+  background-size: cover;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 2rem;
+}
+
+.program-card.p002 .program-card__info {
+  min-height: 12rem;
+  padding: 3.2rem 2rem 0;
+}
+
+.program-card.p002 .program-card__img {
+  height: 24.6rem;
+  background-size: cover;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  flex-direction: column-reverse;
+  background-position: 0 0;
+  padding: 2rem;
+}
+
+.program-card.p003 {
+  height: 24rem;
+  padding: 3.2rem 2rem 2rem;
+}
+
+.program-card.p004 {
+  height: 24rem;
+  padding: 3.2rem 2rem 2rem;
+}
+
+.program-card.p004 .title {
+  color: #ffffff;
+}
+
+.program-card.p004 .sub {
+  color: #ffffff;
+}
+
+.title {
+  font-family: 'Pretendard';
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: -0.04em;
+  color: #212121;
+}
+
+.sub {
+  font-family: 'Pretendard';
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 100%;
+  color: #616161;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tags > * {
+  margin-top: 0.4rem;
+  margin-right: 0.4rem;
+}
+
+.tags > *:last-child {
+  margin-right: 0;
+}
+
+.program-tags {
+  padding: 0.4rem 0.6rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+
+  font-family: 'Pretendard';
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 100%;
+  color: #000000;
+}

@@ -1,4 +1,4 @@
 export type QnA = {
-  "Q.": string;
-  "A.": string;
+  Q: string;
+  A: string;
 };
