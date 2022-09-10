@@ -75,7 +75,37 @@ export default function ProgramCardGenerator() {
   const [contentsBlocks, setContentsBlocks] = useStringInputState("");
 
   const { alertMessage, alertStyle, isShowingAlert, showAlert } = useAlert();
+
+  const validateRequiredValues = () => {
+    if (!title) {
+      return "타이틀을 채워주세요!";
+    }
+
+    if (!subtitle) {
+      return "서브타이틀을 채워주세요!";
+    }
+
+    if (!thumbnail) {
+      return "카드 썸네일 주소를 채워주세요!";
+    }
+
+    if (!recommendAges.length) {
+      return "추천 연령 옆 적용하기 버튼을 눌러주세요!";
+    }
+
+    if (openDuration.length !== 2) {
+      return "노출 기간을 설정해주세요!";
+    }
+
+    return "";
+  };
+
   const copyForSpreadSheet = () => {
+    const errorMessage = validateRequiredValues();
+    if (errorMessage) {
+      return showAlert(errorMessage);
+    }
+
     const fields = [
       uuid.v4(),
       title.replaceAll("\n", "<br />"),
@@ -84,14 +114,14 @@ export default function ProgramCardGenerator() {
       uiType,
       thumbnail,
       +isShowing, // 0 또는 1로 표현
-      recommendAges.join(),
+      `[${recommendAges.join()}]`,
       conceptType,
       openDuration[0], // 오픈날짜
       openDuration[1], // 클로즈 날짜
       shareThumbnail,
       +isShowingEndDate, // 0 또는 1로 표현
       orderNumber,
-      subjects.length ? subjects.join() : "",
+      subjects.length ? `[${subjects.join()}]` : "",
       packageId,
       linkUrl,
       linkType === ProgramCardLinkType.없음 ? "" : linkType,
@@ -109,7 +139,7 @@ export default function ProgramCardGenerator() {
   return (
     <div>
       {isShowingAlert && (
-        <Antd.Alert style={alertStyle} message={alertMessage} />
+        <Antd.Alert style={alertStyle} message={alertMessage} type="error" />
       )}
       <Antd.Space direction="vertical" size="large">
         <TitleInput title={title} setTitle={setTitle} />
