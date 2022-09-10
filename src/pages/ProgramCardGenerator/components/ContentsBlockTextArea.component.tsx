@@ -30,7 +30,15 @@ export function ContentsBlockTextArea({
       <Antd.Modal
         open={isShowingModal}
         width="80vw"
-        onCancel={() => setIsShowingModal(false)}
+        footer={
+          <Antd.Button
+            danger
+            type="primary"
+            onClick={() => setIsShowingModal(false)}
+          >
+            창 닫기
+          </Antd.Button>
+        }
       >
         <ProgramContentsBlock />
       </Antd.Modal>
