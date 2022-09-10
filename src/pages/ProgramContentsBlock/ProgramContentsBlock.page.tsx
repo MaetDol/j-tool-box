@@ -72,7 +72,17 @@ export default function ProgramContentsBlock() {
       }}
     >
       <Antd.Alert message={alertMessage} type="error" style={alertStyle} />
-      <Antd.Row align="middle">
+      <Antd.Row
+        align="middle"
+        style={{
+          position: "sticky",
+          top: "0",
+          paddingTop: "16px",
+          zIndex: "2",
+          backdropFilter: "blur(16px)",
+          backgroundColor: "rgba(255,255,255,0.5)",
+        }}
+      >
         <Antd.Button
           type="primary"
           size="large"
