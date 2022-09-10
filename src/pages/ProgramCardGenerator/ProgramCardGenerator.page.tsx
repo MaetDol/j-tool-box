@@ -6,7 +6,9 @@ import {
   useSelectState,
   useStringInputState,
 } from "hooks";
+import { useAlert } from "pages/ProgramContentsBlock/ProgramContentsBlock.hooks";
 import { useState } from "react";
+import * as uuid from "uuid";
 import {
   CardTypeRadio,
   ConceptTypeRadio,
@@ -30,10 +32,6 @@ import {
   ProgramCardType,
   ProgramCardUIType,
 } from "./ProgramCardGenerator.model";
-import * as uuid from "uuid";
-import { useAlert } from "pages/ProgramContentsBlock/ProgramContentsBlock.hooks";
-import { getTags } from "components/ProgramCard/ProgramCard.utils";
-import { ProgramCard } from "components/ProgramCard";
 
 export default function ProgramCardGenerator() {
   const [title, setTitle] = useStringInputState("");
