@@ -9,3 +9,4 @@ export * from "./OrderNumberAndPackageIdInput.component";
 export * from "./SubjectSelect.component";
 export * from "./UrlAndTypeInputGroup.component";
 export * from "./ExtraInputGroup.component";
+export * from "./ContentsBlockTextArea.component";

@@ -9,6 +9,7 @@ import { useState } from "react";
 import {
   CardTypeRadio,
   ConceptTypeRadio,
+  ContentsBlockTextArea,
   ExtraInputGroup,
   OrderNumberAndPackageIdInput,
   RecommendAgeSlider,
@@ -65,6 +66,8 @@ export default function ProgramCard() {
   const [target, setTarget] = useState<ProgramCardTarget>(
     ProgramCardTarget.부모님
   );
+
+  const [contentsBlocks, setContentsBlocks] = useStringInputState("");
 
   return (
     <div>
@@ -127,9 +130,10 @@ export default function ProgramCard() {
           setLinkUrl={setLinkUrl}
         />
 
-        <Antd.Input.Group>
-          콘텐츠 블럭 <Antd.Input.TextArea />
-        </Antd.Input.Group>
+        <ContentsBlockTextArea
+          contentsBlocks={contentsBlocks}
+          setContentsBlocks={setContentsBlocks}
+        />
 
         <ExtraInputGroup
           hasKit={hasKit}
