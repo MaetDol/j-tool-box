@@ -42,3 +42,33 @@ export enum ProgramCardTarget {
   부모님 = 2,
   아이 = 4,
 }
+
+export type RawProgramCardData = {
+  sid: string;
+  title: string;
+  desc: string;
+  type: ProgramCardType;
+  ui_type: ProgramCardUIType;
+  intro_img_url: string;
+  open_status: 0 | 1;
+  target_ages: string;
+  program_concept: ProgramCardConceptType;
+  display_start_datetime: string;
+  display_end_datetime: string;
+  share_thumbnail_url?: string;
+  display_short_sale_badge: 0 | 1;
+  order: number;
+  subject_type?: ProgramCardSubjectType[];
+  package_id?: string;
+  link_url?: string;
+  link_type?: ProgramCardLinkType;
+  contents_block?: string;
+  class_location_type: ProgramCardLocationType;
+  is_kit: 0 | 1;
+  target_role: ProgramCardTarget;
+};
+
+export type TagData = {
+  type: string;
+  name: string;
+};

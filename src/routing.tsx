@@ -1,4 +1,9 @@
-import { Home, ProgramCard, ProgramContentsBlock, ProgramQna } from "pages";
+import {
+  Home,
+  ProgramCardGenerator,
+  ProgramContentsBlock,
+  ProgramQna,
+} from "pages";
 import { useRoutes } from "react-router-dom";
 
 export enum URLs {
@@ -26,7 +31,7 @@ export default function Routings() {
     },
     {
       path: URLs.PROGRAM_CARD,
-      element: <ProgramCard />,
+      element: <ProgramCardGenerator />,
     },
   ]);
 

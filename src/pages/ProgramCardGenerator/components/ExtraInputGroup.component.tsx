@@ -4,7 +4,7 @@ import { Antd } from "components";
 import {
   ProgramCardLocationType,
   ProgramCardTarget,
-} from "../ProgramCard.model";
+} from "../ProgramCardGenerator.model";
 
 type Props = {
   location: ProgramCardLocationType;

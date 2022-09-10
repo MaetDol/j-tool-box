@@ -1,5 +1,5 @@
 import { Antd } from "components";
-import { ProgramCardSubjectType } from "../ProgramCard.model";
+import { ProgramCardSubjectType } from "../ProgramCardGenerator.model";
 
 type Props = {
   subjects: ProgramCardSubjectType[];

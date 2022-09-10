@@ -1,5 +1,6 @@
 import { Antd, RequiredAsterisk } from "components";
 import {
+  copy,
   useCheckboxState,
   useRadioState,
   useSelectState,
@@ -28,9 +29,13 @@ import {
   ProgramCardTarget,
   ProgramCardType,
   ProgramCardUIType,
-} from "./ProgramCard.model";
+} from "./ProgramCardGenerator.model";
+import * as uuid from "uuid";
+import { useAlert } from "pages/ProgramContentsBlock/ProgramContentsBlock.hooks";
+import { getTags } from "components/ProgramCard/ProgramCard.utils";
+import { ProgramCard } from "components/ProgramCard";
 
-export default function ProgramCard() {
+export default function ProgramCardGenerator() {
   const [title, setTitle] = useStringInputState("");
   const [subtitle, setSubtitle] = useStringInputState("");
   const [cardType, setCardType] = useRadioState<ProgramCardType>(
@@ -69,8 +74,43 @@ export default function ProgramCard() {
 
   const [contentsBlocks, setContentsBlocks] = useStringInputState("");
 
+  const { alertMessage, alertStyle, isShowingAlert, showAlert } = useAlert();
+  const copyForSpreadSheet = () => {
+    const fields = [
+      uuid.v4(),
+      title.replaceAll("\n", "<br />"),
+      subtitle,
+      cardType,
+      uiType,
+      thumbnail,
+      +isShowing, // 0 또는 1로 표현
+      recommendAges.join(),
+      conceptType,
+      openDuration[0], // 오픈날짜
+      openDuration[1], // 클로즈 날짜
+      shareThumbnail,
+      +isShowingEndDate, // 0 또는 1로 표현
+      orderNumber,
+      subjects.length ? subjects.join() : "",
+      packageId,
+      linkUrl,
+      linkType === ProgramCardLinkType.없음 ? "" : linkType,
+      `"${contentsBlocks.replace(/"/g, '""')}"`,
+      location,
+      +hasKit,
+      target,
+    ];
+    // TODO validating
+    copy(fields.join("\t")).then(() =>
+      showAlert("스프레드 시트용! 복사했어요~!")
+    );
+  };
+
   return (
     <div>
+      {isShowingAlert && (
+        <Antd.Alert style={alertStyle} message={alertMessage} />
+      )}
       <Antd.Space direction="vertical" size="large">
         <TitleInput title={title} setTitle={setTitle} />
         <SubtitleInput setSubtitle={setSubtitle} subtitle={subtitle} />
@@ -149,6 +189,7 @@ export default function ProgramCard() {
             style={{ marginRight: "24px" }}
             size="large"
             type="primary"
+            onClick={copyForSpreadSheet}
           >
             스프레드 시트에 붙여넣을거에요!
           </Antd.Button>

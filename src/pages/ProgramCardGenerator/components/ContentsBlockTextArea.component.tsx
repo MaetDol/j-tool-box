@@ -23,6 +23,7 @@ export function ContentsBlockTextArea({
         수정하기
       </Antd.Button>
       <Antd.Input.TextArea
+        autoSize
         value={contentsBlocks}
         onChange={setContentsBlocks}
       />

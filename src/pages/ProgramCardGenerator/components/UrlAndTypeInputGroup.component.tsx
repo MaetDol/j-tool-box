@@ -1,7 +1,7 @@
 import { RadioChangeEvent } from "antd";
 import { Antd } from "components";
 import { ChangeEventHandler } from "react";
-import { ProgramCardLinkType } from "../ProgramCard.model";
+import { ProgramCardLinkType } from "../ProgramCardGenerator.model";
 
 type Props = {
   linkType: ProgramCardLinkType;

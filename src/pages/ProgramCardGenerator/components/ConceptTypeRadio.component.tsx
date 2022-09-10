@@ -1,6 +1,6 @@
 import { RadioChangeEvent } from "antd";
 import { Antd } from "components";
-import { ProgramCardConceptType } from "../ProgramCard.model";
+import { ProgramCardConceptType } from "../ProgramCardGenerator.model";
 
 type Props = {
   conceptType: ProgramCardConceptType;
