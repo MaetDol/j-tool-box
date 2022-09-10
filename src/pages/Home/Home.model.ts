@@ -1,5 +1,9 @@
 export const timeline: { timestamp: string; contents: string[] }[] = [
   {
+    timestamp: "2022-09-10",
+    contents: ["ProgramCard 생성기 작업 완료~! 야호"],
+  },
+  {
     timestamp: "2022-09-08",
     contents: ["Contents Block 생성기에서 JSON 불러올 수 있게 기능 추가"],
   },
