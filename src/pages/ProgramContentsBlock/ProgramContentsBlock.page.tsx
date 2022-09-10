@@ -126,7 +126,7 @@ export default function ProgramContentsBlock() {
 
       <Antd.Modal
         title="불러올 콘텐츠 블럭 JSON을 입력해주세요"
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={confirmInputModal}
         onCancel={closeInputModal}
         afterClose={() => setJsonInput("")}
