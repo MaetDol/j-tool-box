@@ -12,6 +12,7 @@
     "@types/node": "^16.11.49",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/uuid": "^8.3.4",
     "antd": "^4.23.0",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
