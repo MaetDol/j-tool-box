@@ -1,0 +1,36 @@
+.program-tag {
+  padding: 0.4rem 0.6rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+
+  font-family: 'Pretendard';
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 100%;
+  color: #000000;
+}
+
+.program-tag.online {
+  background-color: #fb2267;
+  color: #ffffff;
+}
+.program-tag.expert {
+  border: 1px solid #e1bee7;
+  color: #7a1fa2;
+}
+.program-tag.field_trip {
+  border: 1px solid #ffe4bd;
+  color: #f28300;
+}
+.program-tag.target_parent {
+  border: 1px solid #d7f5c5;
+  color: #3fb313;
+}
+.program-tag.is_kit {
+  border: 1px solid #bcdfff;
+  color: #005bad;
+}
+.program-tag.limit_date {
+  background-color: #6c84fb;
+  color: #ffffff;
+}
