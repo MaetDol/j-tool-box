@@ -43,3 +43,6 @@ export const PROGRAM_TAG_CONSTANT = {
     type: ProgramTagType.LIMIT_DATE,
   },
 } as const;
+
+export const FALLBACK_IMAGE_URL =
+  process.env.PUBLIC_URL + "/statics/images/fallback.gif";
