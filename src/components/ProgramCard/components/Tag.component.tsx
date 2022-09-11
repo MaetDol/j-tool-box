@@ -6,5 +6,5 @@ type Props = {
 };
 
 export function Tag({ type, name }: Props) {
-  return <div className={"program-tag" + type}>{name}</div>;
+  return <div className={"program-tag " + type}>{name}</div>;
 }

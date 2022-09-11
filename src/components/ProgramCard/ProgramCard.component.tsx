@@ -2,6 +2,8 @@ import {
   ProgramCardUIType,
   TagData,
 } from "pages/ProgramCardGenerator/ProgramCardGenerator.model";
+import { BannerB001 } from "./components/Banner";
+import { EventE001, EventE002 } from "./components/Event";
 import { Circle, Expert, ExpertWhite, Wide } from "./components/Program";
 
 type Props = {
@@ -17,9 +19,9 @@ const cardMap = {
   [ProgramCardUIType.CircleMask]: Circle,
   [ProgramCardUIType.전문쌤검정]: Expert,
   [ProgramCardUIType.전문쌤하양]: ExpertWhite,
-  [ProgramCardUIType.기획전기본]: undefined,
-  [ProgramCardUIType.기획전기본2]: undefined,
-  [ProgramCardUIType.배너기본]: undefined,
+  [ProgramCardUIType.기획전기본]: EventE001,
+  [ProgramCardUIType.기획전기본2]: EventE002,
+  [ProgramCardUIType.배너기본]: BannerB001,
 } as const;
 
 export function ProgramCard({

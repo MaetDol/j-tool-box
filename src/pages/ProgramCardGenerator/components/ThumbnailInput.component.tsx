@@ -14,7 +14,7 @@ export function ThumbnailInput({ setThumbnail, thumbnail }: Props) {
       <Antd.Input
         value={thumbnail}
         onChange={setThumbnail}
-        placeholder="https://storage.googleapis.com/event_3_thumb.webp"
+        placeholder="https://storage.googleapis.com/program/card/thumb/event_3_thumb.webp"
       />
     </Antd.Input.Group>
   );

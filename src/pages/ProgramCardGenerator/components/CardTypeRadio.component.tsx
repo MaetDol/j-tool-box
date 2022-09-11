@@ -39,25 +39,25 @@ export function CardTypeRadio({
         onChange={setUiType}
       >
         <Antd.Select.Option value={ProgramCardUIType.Wide}>
-          Wide
+          P001 - Wide
         </Antd.Select.Option>
         <Antd.Select.Option value={ProgramCardUIType.CircleMask}>
-          Circle Mask
+          P002 - Circle Mask
         </Antd.Select.Option>
         <Antd.Select.Option value={ProgramCardUIType.전문쌤검정}>
-          전문쌤 검정
+          P003 - 전문쌤 검정
         </Antd.Select.Option>
         <Antd.Select.Option value={ProgramCardUIType.전문쌤하양}>
-          전문쌤 하양
+          P004 - 전문쌤 하양
         </Antd.Select.Option>
         <Antd.Select.Option value={ProgramCardUIType.배너기본}>
-          배너 기본
+          B001 - 배너 기본
         </Antd.Select.Option>
         <Antd.Select.Option value={ProgramCardUIType.기획전기본}>
-          기획전 기본
+          E001 - 기획전 기본
         </Antd.Select.Option>
         <Antd.Select.Option value={ProgramCardUIType.기획전기본2}>
-          기획전 기본2
+          E002 - 기획전 기본2
         </Antd.Select.Option>
       </Antd.Select>
     </Antd.Input.Group>
