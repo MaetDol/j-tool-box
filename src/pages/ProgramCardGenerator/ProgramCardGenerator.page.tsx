@@ -233,7 +233,7 @@ export default function ProgramCardGenerator() {
           position: "fixed",
           left: "100%",
           top: "10%",
-          width: "360px",
+          width: "400px",
           transition: "transform 0.3s ease-in-out",
           zIndex: 1,
           transform: showPreview ? "translateX(-105%)" : "translateX(0%)",
