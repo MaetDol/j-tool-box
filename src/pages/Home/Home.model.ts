@@ -1,5 +1,9 @@
 export const timeline: { timestamp: string; contents: string[] }[] = [
   {
+    timestamp: "2022-09-11",
+    contents: ["ProgramCard 미리보기 기능 추가! 😎"],
+  },
+  {
     timestamp: "2022-09-10",
     contents: ["ProgramCard 생성기 작업 완료~! 야호"],
   },
