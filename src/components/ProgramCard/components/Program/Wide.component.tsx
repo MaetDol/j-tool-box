@@ -1,6 +1,7 @@
 import { TagData } from "pages/ProgramCardGenerator/ProgramCardGenerator.model";
 import { Tag } from "../Tag.component";
 import "../Card.styles.css";
+import { FALLBACK_IMAGE_URL } from "../Card.model";
 
 type Props = {
   description: string;
@@ -22,7 +23,9 @@ export function Wide({ description, tags, thumbnail, title }: Props) {
         </div>
         <div
           className="program-card__img"
-          style={{ backgroundImage: `url(${thumbnail})` }}
+          style={{
+            backgroundImage: `url(${thumbnail}), url(${FALLBACK_IMAGE_URL})`,
+          }}
         >
           <div className="tags">
             {tags.map(({ name, type }) => (

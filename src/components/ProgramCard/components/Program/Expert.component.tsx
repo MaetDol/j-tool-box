@@ -1,6 +1,7 @@
 import { TagData } from "pages/ProgramCardGenerator/ProgramCardGenerator.model";
 import { Tag } from "../Tag.component";
 import "../Card.styles.css";
+import { FALLBACK_IMAGE_URL } from "../Card.model";
 
 type Props = {
   description: string;
@@ -14,7 +15,9 @@ export function Expert({ description, tags, thumbnail, title }: Props) {
     <div className="card">
       <div
         className="program-card p003"
-        style={{ backgroundImage: `url(${thumbnail})` }}
+        style={{
+          backgroundImage: `url(${thumbnail}), url(${FALLBACK_IMAGE_URL})`,
+        }}
       >
         <div className="program-card__info">
           <div
