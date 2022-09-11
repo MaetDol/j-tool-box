@@ -123,7 +123,7 @@ export default function ProgramCardGenerator() {
       orderNumber,
       subjects.length ? `[${subjects.join()}]` : "",
       packageId,
-      linkUrl,
+      linkType === ProgramCardLinkType.없음 ? "" : linkUrl,
       linkType === ProgramCardLinkType.없음 ? "" : linkType,
       `"${contentsBlocks.replace(/"/g, '""')}"`,
       location,
