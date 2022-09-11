@@ -180,7 +180,7 @@ export default function ProgramCardGenerator() {
         <Antd.Input.Group>
           공유시 노출될 썸네일
           <Antd.Input
-            placeholder="https://storage.googleapis.com/share_event_3.webp"
+            placeholder="https://storage.googleapis.com/program/card/share/event_3_share.png"
             value={shareThumbnail}
             onChange={setShareThumbnail}
           />
