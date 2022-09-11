@@ -1,5 +1,5 @@
 .card {
-  margin: 2rem;
+  margin: 20px;
   background-color: #ffffff;
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.16);
   border-radius: 24px;
@@ -15,41 +15,41 @@
 }
 
 .program-card.p001 .program-card__info {
-  padding: 3.2rem 2rem;
+  padding: 32px 20px;
 }
 
 .program-card.p001 .program-card__img {
-  height: 21.4rem;
+  height: 214px;
   background-size: cover;
   border-radius: 0 0 24px 24px;
   display: flex;
   flex-direction: column-reverse;
-  padding: 2rem;
+  padding: 20px;
 }
 
 .program-card.p002 .program-card__info {
-  min-height: 12rem;
-  padding: 3.2rem 2rem 0;
+  min-height: 120px;
+  padding: 32px 20px 0;
 }
 
 .program-card.p002 .program-card__img {
-  height: 24.6rem;
+  height: 246px;
   background-size: cover;
   border-radius: 0 0 24px 24px;
   display: flex;
   flex-direction: column-reverse;
   background-position: 0 0;
-  padding: 2rem;
+  padding: 20px;
 }
 
 .program-card.p003 {
-  height: 24rem;
-  padding: 3.2rem 2rem 2rem;
+  height: 240px;
+  padding: 32px 20px 20px;
 }
 
 .program-card.p004 {
-  height: 24rem;
-  padding: 3.2rem 2rem 2rem;
+  height: 240px;
+  padding: 32px 20px 20px;
 }
 
 .program-card.p004 .title {
@@ -62,7 +62,7 @@
 
 .title {
   font-family: 'Pretendard';
-  font-size: 2.2rem;
+  font-size: 22px;
   font-weight: 700;
   line-height: 130%;
   letter-spacing: -0.04em;
@@ -71,8 +71,8 @@
 
 .sub {
   font-family: 'Pretendard';
-  margin-bottom: 1.2rem;
-  font-size: 1.6rem;
+  margin-bottom: 12px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 100%;
   color: #616161;
@@ -84,8 +84,8 @@
 }
 
 .tags > * {
-  margin-top: 0.4rem;
-  margin-right: 0.4rem;
+  margin-top: 4px;
+  margin-right: 4px;
 }
 
 .tags > *:last-child {
@@ -93,12 +93,12 @@
 }
 
 .program-tags {
-  padding: 0.4rem 0.6rem;
+  padding: 4px 6px;
   background-color: #ffffff;
   border-radius: 4px;
 
   font-family: 'Pretendard';
-  font-size: 1.4rem;
+  font-size: 14px;
   font-weight: 500;
   line-height: 100%;
   color: #000000;
