@@ -1,4 +1,6 @@
 import { Antd, RequiredAsterisk } from "components";
+import { ProgramCard } from "components/ProgramCard";
+import { getTags } from "components/ProgramCard/ProgramCard.utils";
 import {
   copy,
   useCheckboxState,
@@ -134,6 +136,8 @@ export default function ProgramCardGenerator() {
     );
   };
 
+  const [showPreview, setShowPreview] = useState(false);
+
   return (
     <div>
       {isShowingAlert && (
@@ -223,6 +227,45 @@ export default function ProgramCardGenerator() {
           </Antd.Button>
         </Antd.Input.Group>
       </Antd.Space>
+
+      <div
+        style={{
+          position: "fixed",
+          left: "100%",
+          top: "10%",
+          width: "360px",
+          transition: "transform 0.3s ease-in-out",
+          zIndex: 1,
+          transform: showPreview ? "translateX(-105%)" : "translateX(0%)",
+        }}
+      >
+        <Antd.Button
+          style={{
+            transform: "rotate(-90deg) translateX(-110%)",
+            position: "absolute",
+            left: "-16px",
+            transformOrigin: "left",
+          }}
+          type="primary"
+          onClick={() => setShowPreview((prev) => !prev)}
+        >
+          카드 미리보기
+        </Antd.Button>
+        <ProgramCard
+          description={subtitle}
+          tags={getTags({
+            locationType: location,
+            conceptType,
+            endDateString: openDuration[1] || "",
+            hasEndDateBadge: isShowingEndDate,
+            hasKit,
+            target,
+          })}
+          thumbnail={thumbnail}
+          title={title.replace(/\n/g, "<br/>")}
+          uiType={uiType}
+        />
+      </div>
     </div>
   );
 }
