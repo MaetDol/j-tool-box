@@ -261,7 +261,7 @@ export default function ProgramCardGenerator() {
             hasKit,
             target,
           })}
-          thumbnail={thumbnail}
+          thumbnail={`${thumbnail}?${Date.now()}`}
           title={title.replace(/\n/g, "<br/>")}
           uiType={uiType}
         />
