@@ -2,7 +2,10 @@ import { QnA } from "./QnaParser.models";
 
 export function parseQnaString(input: string): QnA[] {
   try {
-    const qnaStrings = input.replace(/\n+/g, "\n").split(/\n(?=Q\.)/);
+    const qnaStrings = input
+      .trim()
+      .replace(/\n+/g, "\n")
+      .split(/\n(?=Q\.)/);
 
     const qnaSet = qnaStrings.map((qnaString) => {
       const qna = qnaString.split(/\n(?=A\.)/);
@@ -14,7 +17,8 @@ export function parseQnaString(input: string): QnA[] {
     });
 
     return qnaSet;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return [];
   }
 }

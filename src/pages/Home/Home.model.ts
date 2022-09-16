@@ -1,5 +1,13 @@
 export const timeline: { timestamp: string; contents: string[] }[] = [
   {
+    timestamp: "2022-09-16",
+    contents: [
+      "QnA 공백으로 시작하면 파싱 안되는 버그 수정",
+      "방문자 수 기록 시작",
+      "여기! 이 페이지! 설명 추가!!",
+    ],
+  },
+  {
     timestamp: "2022-09-11",
     contents: ["ProgramCard 미리보기 기능 추가! 😎"],
   },

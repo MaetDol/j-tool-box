@@ -36,7 +36,8 @@ export function contentsBlocksFromJson(
   let parsedJson: RawContentsBlockData[];
   try {
     parsedJson = JSON.parse(json);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return "JSON 파싱에 실패했어요";
   }
 
