@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/j-tool-box/static/css/main.4b5ca38b.css",
+    "main.js": "/j-tool-box/static/js/main.63609958.js",
+    "index.html": "/j-tool-box/index.html",
+    "main.4b5ca38b.css.map": "/j-tool-box/static/css/main.4b5ca38b.css.map",
+    "main.63609958.js.map": "/j-tool-box/static/js/main.63609958.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4b5ca38b.css",
+    "static/js/main.63609958.js"
+  ]
+}
