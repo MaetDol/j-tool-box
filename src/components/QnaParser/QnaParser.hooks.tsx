@@ -17,7 +17,8 @@ export function parseQnaString(input: string): QnA[] {
     });
 
     return qnaSet;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return [];
   }
 }
